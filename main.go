@@ -25,8 +25,8 @@ func randomHex(n int) string {
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	port := *flag.Int("port", 8080, "http server listen port")
-	urlPrefix := *flag.String("url", "http://localhost:8080/", "http server external url prefix")
+	port := flag.Int("port", 8080, "http server listen port")
+	urlPrefix := flag.String("url", "http://localhost:8080/", "http server external url prefix")
 	flag.Parse()
 
 	db, err := bolt.Open("goshort.db", 0600, nil)
@@ -122,12 +122,12 @@ func main() {
 				Short string `html:"short"`
 				Url   string `html:"url"`
 			}{
-				Short: urlPrefix + key,
+				Short: *urlPrefix + key,
 				Url:   url,
 			})
 		}
 
 	})
-	fmt.Println("listening on " + urlPrefix)
-	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), nil))
+	fmt.Println("listening on " + *urlPrefix)
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
