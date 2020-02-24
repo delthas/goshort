@@ -1,4 +1,4 @@
-# goshort
+# goshort [![builds.sr.ht status](https://builds.sr.ht/~delthas/goshort.svg)](https://builds.sr.ht/~delthas/goshort?)
 
 A trivially small link shortener.
 
