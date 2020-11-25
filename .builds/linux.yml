@@ -9,11 +9,13 @@ secrets:
   - 63d7a0ac-2635-4d42-9709-efcd2cf74858 # ssh deploy key
 tasks:
   - setup: |
-      cd goshort
-      git checkout -q $GIT_COMMIT_ID
+      # see https://github.com/containers/toolbox/pull/534
+      curl https://raw.githubusercontent.com/containers/toolbox/master/src/libc-wrappers/libc-wrappers.c -O
+      gcc -c libc-wrappers.c
+      ar rcs libc-wrappers.a libc-wrappers.o
   - build: |
       cd goshort
-      GOARCH=amd64 go build -ldflags "-s -w" -v -o goshort .
+      GOARCH=amd64 go build -ldflags "-s -w -extldflags '-Wl,--wrap,pthread_sigmask $PWD/../libc-wrappers.a' -linkmode external" -v -o goshort .
       upx goshort
   - deploy: |
       cd goshort
