@@ -17,5 +17,5 @@ tasks:
       upx goshort.exe
   - deploy: |
       cd goshort
-      ssh -o StrictHostKeyChecking=no -q user@delthas.fr 'mkdir -p /srv/http/blog/goshort/windows/'
-      scp -o StrictHostKeyChecking=no -q goshort.exe user@delthas.fr:/srv/http/blog/goshort/windows/goshort.exe
+      ssh -p 2222 -o StrictHostKeyChecking=no -q user@delthas.fr 'mkdir -p /srv/http/blog/goshort/windows/'
+      scp -P 2222 -o StrictHostKeyChecking=no -q goshort.exe user@delthas.fr:/srv/http/blog/goshort/windows/goshort.exe
